@@ -33,6 +33,23 @@ const addStudent = (req, res) => {
   });
 };
 
+const updateStudent = (req, res) => {
+  const id = parseInt(req.params.id);
+  const { name } = req.body;
+
+  pool.query(queries.getStudentById, [id], (error, result) => {
+    if (error) throw error;
+    if (!result.rows.length) {
+      res.send("Student does not exists in the database");
+    }
+  });
+
+  pool.query(queries.updateStudent, [name, id], (error, result) => {
+    if (error) throw error;
+    res.status(200).send("Student has been updated");
+  });
+};
+
 const removeStudent = (req, res) => {
   const id = parseInt(req.params.id);
 
@@ -49,4 +66,10 @@ const removeStudent = (req, res) => {
   });
 };
 
-module.exports = { getStudents, getStudentById, addStudent, removeStudent };
+module.exports = {
+  getStudents,
+  getStudentById,
+  addStudent,
+  updateStudent,
+  removeStudent,
+};
