@@ -1,9 +1,8 @@
 const { Router } = require("express");
+const db = require("./controller");
 
 const router = Router();
 
-router.get("/", (req, res) => {
-  res.send("Using API route");
-});
+router.get("/", db.getStudents);
 
 module.exports = router;
